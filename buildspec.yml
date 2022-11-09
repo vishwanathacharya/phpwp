@@ -8,8 +8,8 @@ phases:
       - echo Logging in to Amazon ECR.....
       - aws --version
       #- docker --version
-      - aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 936301162638.dkr.ecr.eu-west-3.amazonaws.com
-      - REPOSITORY_URI=936301162638.dkr.ecr.eu-west-3.amazonaws.com/php-wp
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 660645611558.dkr.ecr.us-east-2.amazonaws.com
+      - REPOSITORY_URI=660645611558.dkr.ecr.us-east-2.amazonaws.com/wp-php
       #- IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
@@ -24,7 +24,7 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"php-wp","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"phpwp","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
 
